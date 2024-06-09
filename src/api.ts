@@ -1,4 +1,5 @@
-import axios, { type AxiosResponse } from "axios";
+import axios from "axios";
+import type { AxiosResponse } from "axios";
 
 const API_URL = "https://kanban-o-cff86d1683e5.herokuapp.com/api";
 
