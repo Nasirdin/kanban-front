@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { getAllTask, updateTaskStatus, type TaskResponse } from "@/api";
+import { getAllTasks, updateTaskStatus, type TaskResponse } from "@/api";
 import { io } from "socket.io-client";
 import Col from "./Col.vue";
 import CreateTask from "./CreateTask.vue";
@@ -31,7 +31,7 @@ onMounted(async () => {
 });
 
 const refreshTasks = async () => {
-  const tasks = await getAllTask();
+  const tasks = await getAllTasks();
   allTask.value = tasks;
 };
 const categories: Categories[] = [

@@ -1,4 +1,4 @@
-import axios, { type AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const API_URL = "https://kanban-o-cff86d1683e5.herokuapp.com/api";
 
@@ -26,7 +26,8 @@ export interface LoginRequest {
   login: string;
   password: string;
 }
-export interface TaskReguest {
+
+export interface TaskRequest {
   title: string;
   description: string;
   authorId: number;
@@ -43,7 +44,7 @@ export const createUser = async (
     );
 
     if (response.status === 200) {
-      if (response.data.statusCode === 200) {
+      if (response.data.success) {
         return { success: true };
       } else {
         return {
@@ -54,7 +55,7 @@ export const createUser = async (
     } else {
       return { success: false, message: "Произошла ошибка при регистрации" };
     }
-  } catch (error) {
+  } catch (err) {
     return { success: false, message: "Произошла ошибка при регистрации" };
   }
 };
@@ -71,12 +72,12 @@ export const userLogin = async (user: LoginRequest): Promise<Response> => {
     } else {
       return { success: false, message: "Произошла ошибка при входе" };
     }
-  } catch (error) {
+  } catch (err) {
     return { success: false, message: "Произошла ошибка при входе" };
   }
 };
 
-export const createTask = async (task: TaskReguest): Promise<Response> => {
+export const createTask = async (task: TaskRequest): Promise<Response> => {
   try {
     const response: AxiosResponse<Response> = await axios.post(
       `${API_URL}/task`,
@@ -85,19 +86,22 @@ export const createTask = async (task: TaskReguest): Promise<Response> => {
     if (response.status === 200) {
       return { success: true };
     }
+    return { success: false, message: "Произошла ошибка при создании задачи" };
   } catch (err) {
-    console.log(error);
+    console.log(err);
+    return { success: false, message: "Произошла ошибка при создании задачи" };
   }
 };
 
-export const getAllTask = async (): Promise<TaskResponse[]> => {
+export const getAllTasks = async (): Promise<TaskResponse[]> => {
   try {
-    const response: AxiosResponse<Response> = await axios.get(
+    const response: AxiosResponse<TaskResponse[]> = await axios.get(
       `${API_URL}/task`
     );
     return response.data;
   } catch (err) {
-    console.log(error);
+    console.log(err);
+    throw err;
   }
 };
 

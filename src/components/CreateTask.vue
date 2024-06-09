@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createTask, type TaskReguest } from "@/api";
+import { createTask, type TaskRequest } from "@/api";
 import { ref, defineEmits } from "vue";
 
 const emit = defineEmits();
@@ -11,7 +11,7 @@ const closeModal = () => {
 };
 
 const submitForm = async () => {
-  const newTask: TaskReguest = {
+  const newTask: TaskRequest = {
     title: title.value,
     description: description.value,
     authorId: 1,
