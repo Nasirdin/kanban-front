@@ -1,0 +1,84 @@
+@import url(../fonts/Montserrat/stylesheet.css);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f0f0f0;
+  color: #161616;
+  font-family: "Montserrat";
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+}
+
+button,
+input {
+  outline: none;
+  background-color: none;
+  border: none;
+}
+button {
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style-type: none;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.authForm {
+  width: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 25px 20px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.authForm__label {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 7px;
+}
+.authForm__input {
+  border: 1px solid #979797;
+  padding: 10px 15px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.submitBtn {
+  color: #fff;
+  background-color: #feb700;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+  font-size: 16px;
+}
+.submitBtn:hover {
+  background-color: #eaa800;
+  transition: 0.3s;
+}
+.authForm__link {
+  text-align: center;
+  color: #eaa800;
+}
