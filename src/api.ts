@@ -114,7 +114,7 @@ export const updateTaskStatus = async (
   try {
     const response: AxiosResponse<Response> = await axios.put(
       `${API_URL}/task/${id}`,
-      { status: newStatus },
+      { status: newStatus }
     );
     return response.data;
   } catch (err) {
