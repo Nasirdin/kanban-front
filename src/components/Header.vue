@@ -6,6 +6,8 @@ const router = useRouter();
 const logOut = () => {
   router.push("/signin");
   localStorage.removeItem("accessToken");
+  localStorage.removeItem("username");
+  localStorage.removeItem("userId");
 };
 
 const username = localStorage.getItem("username");

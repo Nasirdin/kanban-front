@@ -4,7 +4,7 @@ import { ref, defineEmits } from "vue";
 
 const emit = defineEmits();
 const title = ref("");
-const description = ref("");
+const content = ref("");
 
 const closeModal = () => {
   emit("closeModal");
@@ -14,7 +14,7 @@ const submitForm = async () => {
   const authorId: number = JSON.parse(localStorage.getItem("user.id")!);
   const newTask: TaskRequest = {
     title: title.value,
-    description: description.value,
+    content: content.value,
     authorId: authorId,
     status: "new",
   };
@@ -50,7 +50,7 @@ const submitForm = async () => {
         </label>
         <label class="createTask__label">
           Описание
-          <input type="text" class="createTask__input" v-model="description" />
+          <input type="text" class="createTask__input" v-model="content" />
         </label>
         <button type="submit" class="createTask__submit submitBtn">
           Создать

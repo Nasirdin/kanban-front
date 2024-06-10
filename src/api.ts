@@ -41,7 +41,7 @@ export interface UserResponse {
 
 export interface TaskRequest {
   title: string;
-  description: string;
+  content: string;
   authorId: number;
   status: string;
 }
