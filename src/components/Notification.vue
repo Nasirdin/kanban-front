@@ -1,6 +1,6 @@
 <template>
   <div class="notification">
-    <p class="notification__text">Пользователь 1 добавил новую задачу</p>
+    <p class="notification__text">Новая задача появилась на доске</p>
   </div>
 </template>
 

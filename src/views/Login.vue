@@ -1,53 +1,27 @@
-<script lang="ts">
-import { defineComponent, ref, type Ref } from "vue";
-import { userLogin, type LoginRequest, type Response } from "../api";
+<script setup lang="ts">
+import { ref } from "vue";
+import { userLogin, type LoginRequest} from "../api";
 import { useRouter } from "vue-router";
 
-interface LoginSetup {
-  login: Ref<string>;
-  password: Ref<string>;
-  response: Ref<Response | null>;
-  error: Ref<string | null>;
-  handleSubmit: () => Promise<void>;
-}
+const login = ref("");
+const password = ref("");
+const router = useRouter();
 
-export default defineComponent({
-  name: "Login",
-  setup(): LoginSetup {
-    const login = ref("");
-    const password = ref("");
+const handleSubmit = async () => {
+  const user: LoginRequest = {
+    login: login.value,
+    password: password.value,
+  };
 
-    const response = ref<Response | null>(null);
-    const error = ref<string | null>(null);
-
-    const router = useRouter();
-
-    const handleSubmit = async () => {
-      const user: LoginRequest = {
-        login: login.value,
-        password: password.value,
-      };
-      
-
-      try {
-        const res = await userLogin(user);
-        if (res.success) {
-          router.push("/");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    return {
-      login,
-      password,
-      response,
-      error,
-      handleSubmit,
-    };
-  },
-});
+  try {
+    const res = await userLogin(user);
+    if (res.success) {
+      router.push("/");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
 
 <template>

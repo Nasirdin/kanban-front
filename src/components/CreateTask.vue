@@ -15,7 +15,7 @@ const submitForm = async () => {
     title: title.value,
     description: description.value,
     authorId: 1,
-    status: "new"
+    status: "new",
   };
 
   try {
@@ -33,7 +33,13 @@ const submitForm = async () => {
 <template>
   <div class="createTask">
     <div class="createTask__content">
-      <button class="createTask__close" @click="closeModal">Назад</button>
+      <button class="createTask__close" @click="closeModal">
+        <img
+          class="createTask__back"
+          src="../assets/icon/arrow-left.png"
+          alt="#"
+        />Назад
+      </button>
       <h2 class="createTask__title">Быстрая сделка</h2>
 
       <form class="createTask__form" @submit.prevent="submitForm">
@@ -77,6 +83,13 @@ const submitForm = async () => {
   background: none;
   font-size: 16px;
   transition: 0.2s;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
+.createTask__back {
+  width: 15px;
 }
 .createTask__close:hover {
   transition: 0.2s;

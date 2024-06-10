@@ -1,11 +1,24 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const logOut = () => {
+  router.push("/signin");
+  localStorage.removeItem("accessToken");
+};
+
+const username = localStorage.getItem("username");
+</script>
+
 <template>
   <div class="header">
     <div class="container">
       <button class="header__userIcon userIcon">
-        <p class="userIcon__text">H</p>
+        <p class="userIcon__text">{{ username }}</p>
       </button>
 
-      <button class="header__out">Выйти</button>
+      <button @click="logOut" class="header__out">Выйти</button>
     </div>
   </div>
 </template>
@@ -21,12 +34,11 @@
 }
 .header__userIcon {
   background-color: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  padding: 10px 15px;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 20px;
 }
 
 .header__userIcon:hover {

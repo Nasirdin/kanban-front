@@ -4,6 +4,7 @@ import { getAllTasks, updateTaskStatus, type TaskResponse } from "@/api";
 import { io } from "socket.io-client";
 import Col from "./Col.vue";
 import CreateTask from "./CreateTask.vue";
+import Notification from "./Notification.vue";
 
 interface Categories {
   id: number;
@@ -13,27 +14,42 @@ interface Categories {
 }
 
 const socket = io("https://kanban-o-335926ee38b9.herokuapp.com");
-//const socket = io("http://localhost:8080");
+// const socket = io("http://localhost:8080");
 
 const props = defineProps<{
   modalVisible: boolean;
 }>();
 
+const showNotification = ref(false);
+
 const emits = defineEmits(["closeModal"]);
 
 const allTask = ref<TaskResponse[]>([]);
+
+const addNewTask = async () => {
+  try {
+    showNotification.value = true;
+    setTimeout(() => {
+      showNotification.value = false;
+    }, 3000);
+  } catch (error) {
+    console.error("Произошла ошибка:", error);
+  }
+};
 
 onMounted(async () => {
   await refreshTasks();
 
   socket.on("taskUpdated", async () => {
-    console.log('ok');
-    
     await refreshTasks();
   });
   socket.on("newTaskCreated", async (createdTask: TaskResponse) => {
     allTask.value.push(createdTask);
+    addNewTask();
   });
+  // socket.on("taskDeleted", async () => {
+  //   await refreshTasks();
+  // });
 });
 
 const refreshTasks = async () => {
@@ -97,6 +113,7 @@ const handleDropTask = async (
   </div>
 
   <CreateTask v-if="props.modalVisible" @closeModal="$emit('closeModal')" />
+  <Notification v-if="showNotification" />
 </template>
 
 <style scoped>

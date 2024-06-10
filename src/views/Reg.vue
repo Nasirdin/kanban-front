@@ -1,56 +1,30 @@
-<script lang="ts">
-import { defineComponent, ref, type Ref } from "vue";
+<script setup lang="ts">
+import { ref } from "vue";
 import { createUser, type CreateUserRequest, type Response } from "../api";
 import { useRouter } from "vue-router";
 
-interface RegSetup {
-  username: Ref<string>;
-  login: Ref<string>;
-  password: Ref<string>;
-  response: Ref<Response | null>;
-  error: Ref<string | null>;
-  handleSubmit: () => Promise<void>;
-}
+const username = ref("");
+const login = ref("");
+const password = ref("");
 
-export default defineComponent({
-  name: "Reg",
-  setup(): RegSetup {
-    const username = ref("");
-    const login = ref("");
-    const password = ref("");
+const router = useRouter();
 
-    const response = ref<Response | null>(null);
-    const error = ref<string | null>(null);
+const handleSubmit = async () => {
+  const newUser: CreateUserRequest = {
+    username: username.value,
+    login: login.value,
+    password: password.value,
+  };
+  try {
+    const res = await createUser(newUser);
 
-    const router = useRouter();
-
-    const handleSubmit = async () => {
-      const newUser: CreateUserRequest = {
-        username: username.value,
-        login: login.value,
-        password: password.value,
-      };
-      try {
-        const res = await createUser(newUser);
-        console.log(res);
-
-        if (res.success) {
-          router.push("/signin");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    return {
-      username,
-      login,
-      password,
-      response,
-      error,
-      handleSubmit,
-    };
-  },
-});
+    if (res.success) {
+      router.push("/signin");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>
 
 <template>

@@ -1,11 +1,44 @@
 <script setup lang="ts">
-import { defineEmits } from "vue";
+import { getAllTasks, type TaskResponse } from "@/api";
+import { io } from "socket.io-client";
+import { defineEmits, onMounted, ref } from "vue";
+
+// const socket = io("http://localhost:8080");
+const socket = io("https://kanban-o-335926ee38b9.herokuapp.com");
 
 const emit = defineEmits();
+const taskCounts = ref({
+  isNew: 0,
+  inProcess: 0,
+  failed: 0,
+  success: 0,
+});
 
 const openModal = () => {
   emit("open-modal");
 };
+const tasksCount = async (status: string) => {
+  const tasks = await getAllTasks();
+  return tasks.filter((task) => task.status === status).length;
+};
+
+const refreshTasks = async () => {
+  taskCounts.value.isNew = await tasksCount("new");
+  taskCounts.value.inProcess = await tasksCount("inProcess");
+  taskCounts.value.failed = await tasksCount("fail");
+  taskCounts.value.success = await tasksCount("successful");
+};
+
+onMounted(async () => {
+  refreshTasks();
+
+  socket.on("taskUpdated", async () => {
+    await refreshTasks();
+  });
+  socket.on("newTaskCreated", async () => {
+    await refreshTasks();
+  });
+});
 </script>
 
 <template>
@@ -14,26 +47,22 @@ const openModal = () => {
       Быстрая сделака
     </button>
 
-    <ul class="boardHeader__users">
-      <li class="user-1"></li>
-      <li class="user-2"></li>
-      <li class="user-3"></li>
-      <li class="user-4"></li>
-      <li class="user-5"></li>
-    </ul>
-
     <ul class="boardHeader__items">
       <li class="boardHeader__item">
-        <span class="boardHeader__count">0</span>Новая
+        <span class="boardHeader__count">{{ taskCounts.isNew }}</span
+        >Новая
       </li>
       <li class="boardHeader__item">
-        <span class="boardHeader__count">0</span>В работе
+        <span class="boardHeader__count">{{ taskCounts.inProcess }}</span
+        >В работе
       </li>
       <li class="boardHeader__item">
-        <span class="boardHeader__count">0</span>Сделка провалена
+        <span class="boardHeader__count">{{ taskCounts.failed }}</span
+        >Сделка провалена
       </li>
       <li class="boardHeader__item">
-        <span class="boardHeader__count">0</span>Успешная сделка
+        <span class="boardHeader__count">{{ taskCounts.success }}</span
+        >Успешная сделка
       </li>
     </ul>
   </div>

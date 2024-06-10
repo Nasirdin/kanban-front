@@ -29,6 +29,12 @@ export interface LoginRequest {
   password: string;
 }
 
+export interface LoginResponse {
+  message: string;
+  accessToken: string;
+  username: string;
+}
+
 export interface TaskRequest {
   title: string;
   description: string;
@@ -45,18 +51,16 @@ export const createUser = async (
       user
     );
 
-    if (response.status === 200) {
-      if (response.data.success) {
-        return { success: true };
-      } else {
-        return {
-          success: false,
-          message: "Пользователь с таким именем уже существует",
-        };
-      }
-    } else {
-      return { success: false, message: "Произошла ошибка при регистрации" };
+    if (response.statusText !== "OK") {
+      return {
+        success: false,
+        message: response.data.message,
+      };
     }
+    return {
+      success: true,
+      message: response.data.message,
+    };
   } catch (err) {
     return { success: false, message: "Произошла ошибка при регистрации" };
   }
@@ -64,12 +68,13 @@ export const createUser = async (
 
 export const userLogin = async (user: LoginRequest): Promise<Response> => {
   try {
-    const response: AxiosResponse<Response> = await axios.post(
+    const response: AxiosResponse<LoginResponse> = await axios.post(
       `${API_URL}/user/login`,
       user
     );
-
     if (response.status === 200) {
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("username", response.data.username);
       return { success: true };
     } else {
       return { success: false, message: "Произошла ошибка при входе" };
@@ -115,6 +120,17 @@ export const updateTaskStatus = async (
     const response: AxiosResponse<Response> = await axios.put(
       `${API_URL}/task/${id}`,
       { status: newStatus }
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+export const deleteTask = async (id: number): Promise<Response> => {
+  try {
+    const response: AxiosResponse<Response> = await axios.delete(
+      `${API_URL}/task/${id}`
     );
     return response.data;
   } catch (err) {

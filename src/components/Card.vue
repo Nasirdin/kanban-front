@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import type { TaskResponse } from "@/api";
+import { deleteTask, type TaskResponse } from "@/api";
 
 const props = defineProps<{
   task: TaskResponse;
@@ -15,6 +15,18 @@ function formatDate(dateString: string): string {
 
   return new Date(dateString).toLocaleDateString(undefined, options);
 }
+
+const deleteTaskCard = async () => {
+  if (confirm("Вы уверены, что хотите удалить эту задачу?")) {
+    try {
+      const id: number = props.task.id;
+      await deleteTask(id);
+    } catch (error) {
+      console.error("Ошибка при удалении задачи:", error);
+    }
+  }
+};
+
 function handleDragStart(event: DragEvent): void {
   const target = event.target as HTMLElement;
   target.classList.add("dragging");
@@ -34,12 +46,10 @@ function handleDragEnd(event: DragEvent): void {
     @dragstart="handleDragStart"
     @dragend="handleDragEnd"
   >
-    <div class="card__menu">
-      <span class="card__span"></span>
-    </div>
     <h3 class="card__title">{{ task.title }}</h3>
     <p class="card__text">{{ task.content }}</p>
     <p class="card__owner">{{ task.authorId }}</p>
+    <button class="card__delete" @click="deleteTaskCard">Удалить</button>
     <p class="card__date">{{ formatDate(task.createdat) }}</p>
   </div>
 </template>
@@ -78,39 +88,6 @@ function handleDragEnd(event: DragEvent): void {
 .successful .card::before {
   background-color: #03d967;
 }
-
-.card__menu {
-  position: absolute;
-  right: 10px;
-  height: 15px;
-  width: 5px;
-  cursor: pointer;
-}
-.card__span {
-  position: absolute;
-  left: 0;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background-color: #161616;
-}
-.card__span::before,
-.card__span::after {
-  width: inherit;
-  height: inherit;
-  background-color: inherit;
-  border-radius: inherit;
-  position: absolute;
-  content: "";
-  left: 0;
-}
-.card__span::before {
-  top: 10px;
-}
-.card__span::after {
-  top: 5px;
-}
-
 .card__title {
   margin-bottom: 10px;
 }
@@ -120,10 +97,14 @@ function handleDragEnd(event: DragEvent): void {
 .card__owner {
   color: #0084fe;
 }
-
 .card__date {
   text-align: right;
   color: #545454;
   font-size: 12px;
+}
+
+.card__delete {
+  color: #fe0000;
+  background: none;
 }
 </style>
