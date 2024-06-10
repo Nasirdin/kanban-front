@@ -27,6 +27,8 @@ onMounted(async () => {
   await refreshTasks();
 
   socket.on("taskUpdated", async () => {
+    console.log('ok');
+    
     await refreshTasks();
   });
   socket.on("newTaskCreated", async (createdTask: TaskResponse) => {
