@@ -93,4 +93,10 @@ async function handleDrop(event: DragEvent): Promise<void> {
   margin-left: 10px;
   font-weight: 500;
 }
+
+@media (max-width: 830px) {
+  .col__title{
+    font-size: 12px;
+  }
+}
 </style>

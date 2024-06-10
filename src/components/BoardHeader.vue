@@ -113,4 +113,10 @@ onMounted(async () => {
     justify-content: center;
   }
 }
+
+@media (max-width: 728px) {
+  .boardHeader__item{
+    font-size: 12px;
+  }
+}
 </style>

@@ -114,4 +114,9 @@ const submitForm = async () => {
   padding: 10px 15px;
   border-radius: 6px;
 }
+@media (max-width: 640px) {
+  .createTask__content {
+    width: 90%;
+  }
+}
 </style>
