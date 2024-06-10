@@ -12,7 +12,7 @@ interface Categories {
   type: string;
 }
 
-const socket = io("http://localhost:8080");
+const socket = io("https://kanban-o-335926ee38b9.herokuapp.com");
 
 const props = defineProps<{
   modalVisible: boolean;

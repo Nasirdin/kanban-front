@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
 
+// const API_URL = "http://localhost:8080/api";
 const API_URL = "https://kanban-o-335926ee38b9.herokuapp.com/api";
 
 export interface CreateUserRequest {
@@ -64,7 +65,7 @@ export const createUser = async (
 export const userLogin = async (user: LoginRequest): Promise<Response> => {
   try {
     const response: AxiosResponse<Response> = await axios.post(
-      `${API_URL}/login`,
+      `${API_URL}/user/login`,
       user
     );
 
