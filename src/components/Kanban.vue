@@ -13,6 +13,7 @@ interface Categories {
 }
 
 const socket = io("https://kanban-o-335926ee38b9.herokuapp.com");
+//const socket = io("http://localhost:8080");
 
 const props = defineProps<{
   modalVisible: boolean;
@@ -27,6 +28,9 @@ onMounted(async () => {
 
   socket.on("taskUpdated", async () => {
     await refreshTasks();
+  });
+  socket.on("newTaskCreated", async (createdTask: TaskResponse) => {
+    allTask.value.push(createdTask);
   });
 });
 
