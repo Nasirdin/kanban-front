@@ -7,8 +7,6 @@ const props = defineProps<{
 }>();
 
 function formatDate(dateString: string): string {
-  console.log(dateString);
-
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "2-digit",

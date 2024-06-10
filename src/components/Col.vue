@@ -23,8 +23,6 @@ async function handleDrop(event: DragEvent): Promise<void> {
   event.preventDefault();
   const data = event.dataTransfer!.getData("text/plain");
   const droppedTask = JSON.parse(data);
-  console.log("Dropped Task:", droppedTask);
-
   try {
     if (droppedTask.status !== props.category.type) {
       await updateTaskStatus(props.category.type, droppedTask.id);

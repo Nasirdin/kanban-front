@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { AxiosResponse } from "axios";
 
-const API_URL = "https://kanban-o-cff86d1683e5.herokuapp.com/api";
+const API_URL = "http://localhost:8080/api";
 
 export interface CreateUserRequest {
   username: string;
@@ -113,7 +113,7 @@ export const updateTaskStatus = async (
   try {
     const response: AxiosResponse<Response> = await axios.put(
       `${API_URL}/task/${id}`,
-      { status: newStatus }
+      { status: newStatus },
     );
     return response.data;
   } catch (err) {
