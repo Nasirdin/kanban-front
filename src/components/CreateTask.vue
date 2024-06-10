@@ -11,10 +11,11 @@ const closeModal = () => {
 };
 
 const submitForm = async () => {
+  const authorId: number = JSON.parse(localStorage.getItem("user.id")!);
   const newTask: TaskRequest = {
     title: title.value,
     description: description.value,
-    authorId: 1,
+    authorId: authorId,
     status: "new",
   };
 

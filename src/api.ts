@@ -19,7 +19,7 @@ export interface TaskResponse {
   id: number;
   title: string;
   content: string;
-  authorId: number;
+  authorid: number;
   status: string;
   createdat: string;
 }
@@ -32,6 +32,10 @@ export interface LoginRequest {
 export interface LoginResponse {
   message: string;
   accessToken: string;
+  username: string;
+  userId: number;
+}
+export interface UserResponse {
   username: string;
 }
 
@@ -75,12 +79,31 @@ export const userLogin = async (user: LoginRequest): Promise<Response> => {
     if (response.status === 200) {
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("username", response.data.username);
+      localStorage.setItem("userId", JSON.stringify(response.data.userId));
       return { success: true };
     } else {
       return { success: false, message: "Произошла ошибка при входе" };
     }
   } catch (err) {
     return { success: false, message: "Произошла ошибка при входе" };
+  }
+};
+
+export const getUserById = async (
+  userId: number
+): Promise<UserResponse | null> => {
+  try {
+    const response: AxiosResponse<UserResponse> = await axios.get(
+      `${API_URL}/user/${userId}`
+    );
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Ошибка при получении пользователя:", error);
+    return null
   }
 };
 

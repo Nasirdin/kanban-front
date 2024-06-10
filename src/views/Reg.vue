@@ -53,7 +53,7 @@ const handleSubmit = async () => {
             v-model="password"
         /></label>
         <button class="authForm__btn submitBtn">Регистрация</button>
-        <a class="authForm__link" href="#/login">Войти</a>
+        <a class="authForm__link" href="#/signin">Войти</a>
       </form>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
 import { deleteTask, type TaskResponse } from "@/api";
 
 const props = defineProps<{
@@ -48,15 +48,14 @@ function handleDragEnd(event: DragEvent): void {
   >
     <h3 class="card__title">{{ task.title }}</h3>
     <p class="card__text">{{ task.content }}</p>
-    <p class="card__owner">{{ task.authorId }}</p>
     <button class="card__delete" @click="deleteTaskCard">Удалить</button>
-    <p class="card__date">{{ formatDate(task.createdat) }}</p>
+    <!-- <p class="card__date">{{ formatDate(task.createdat) }}</p> -->
   </div>
 </template>
 
 <style scoped>
 .card {
-  width: 270px;
+  width: 100%;
   border-radius: 6px;
   background-color: #fff;
   padding: 15px;

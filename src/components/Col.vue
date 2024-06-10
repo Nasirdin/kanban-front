@@ -52,7 +52,7 @@ async function handleDrop(event: DragEvent): Promise<void> {
 
 <style scoped>
 .col {
-  width: 280px;
+  width: 100%;
   border: 1px dashed #d9d9d9;
   min-height: 80vh;
   border-radius: 6px;

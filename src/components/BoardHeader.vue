@@ -104,37 +104,13 @@ onMounted(async () => {
   color: #feb700;
 }
 
-.boardHeader__users {
-  display: flex;
-  justify-content: start;
-}
-
-.user-1,
-.user-2,
-.user-3,
-.user-4,
-.user-5 {
-  width: 30px;
-  height: 30px;
-  border-radius: 50px;
-}
-.user-1 {
-  background-color: green;
-}
-.user-2 {
-  background-color: red;
-  transform: translateX(-50%);
-}
-.user-3 {
-  background-color: blue;
-  transform: translateX(-100%);
-}
-.user-4 {
-  background-color: black;
-  transform: translateX(-150%);
-}
-.user-5 {
-  background-color: grey;
-  transform: translateX(-200%);
+@media (max-width: 928px) {
+  .boardHeader {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .boardHeader__items {
+    justify-content: center;
+  }
 }
 </style>

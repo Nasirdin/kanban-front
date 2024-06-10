@@ -118,8 +118,9 @@ const handleDropTask = async (
 
 <style scoped>
 .kanban {
-  display: flex;
+  display: grid;
   justify-content: space-between;
-  gap: 6px;
+  grid-template-columns: repeat(4, 24%);
 }
+
 </style>

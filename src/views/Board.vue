@@ -11,7 +11,7 @@ const accessToken = localStorage.getItem("accessToken");
 
 const router = useRouter();
 if (!accessToken) {
-  router.push("/signin");
+  router.push("/welcome");
 }
 
 const openModal = () => {
