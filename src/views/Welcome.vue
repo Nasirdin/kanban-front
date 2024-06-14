@@ -1,7 +1,7 @@
 <template>
   <div class="welcome">
     <div class="container">
-      <h1 class="welcome__title">Добро пожаловать! Я очень рада тебя видеть</h1>
+      <h1 class="welcome__title">Добро пожаловать! Я очень рад тебя видеть</h1>
       <p class="welcome__text">
         Чтобы продолжить, сначала
         <a class="welcome__link" href="#/signup">зарегистрируйтесь</a>. После
